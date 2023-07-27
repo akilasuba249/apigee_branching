@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SharedFlow name="default">
+  <Step>
+    <Name>KVM-demo</Name>
+  </Step>
+  <Step>
+    <Name>KVM-get</Name>
+  </Step>
+  <Step>
+    <Name>AM-demo</Name>
+  </Step>
+  <Step>
+    <Name>SA-demo</Name>
+  </Step>
+</SharedFlow>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<KeyValueMapOperations continueOnError="false" enabled="true" name="KVM-demo" mapIdentifier="demo">
+  <DisplayName>KVM-demo</DisplayName>
+  <ExclusiveCache>false</ExclusiveCache>
+  <ExpiryTimeInSecs>86400</ExpiryTimeInSecs>
+  <Put>
+    <Key>
+      <Parameter>user</Parameter>
+    </Key>
+    <Value>icici</Value>
+  </Put>
+  <Scope>environment</Scope>
+</KeyValueMapOperations>

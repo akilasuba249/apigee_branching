@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage continueOnError="false" enabled="true" name="AM-demo">
+  <DisplayName>AM-demo</DisplayName>
+  <Properties/>
+  <Copy source="request">
+    <Headers/>
+    <QueryParams/>
+    <FormParams/>
+    <Payload>
+    </Payload>
+    <Verb/>
+    <StatusCode/>
+    <ReasonPhrase/>
+    <Path/>
+  </Copy>
+  <Add>
+    <QueryParams>
+      <QueryParam name="user">{user.name}</QueryParam>
+    </QueryParams>
+  </Add>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>

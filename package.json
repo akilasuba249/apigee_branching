@@ -1,0 +1,41 @@
+{
+  "name": "iciciproxy-api-proxy",
+  "version": "1.0.0",
+  "description": "Unit tests for Hello World API Proxy",
+  "scripts": {
+    "test": "./node_modules/.bin/istanbul cover _mocha --",
+    "coverage": "./node_modules/.bin/istanbul report text cobertura"
+  },
+  "dependencies": {
+    "apickli": "latest",
+    "apigeetool": "^0.16.1",
+    "assert": "^2.0.0",
+    "coverage": "^0.4.1",
+    "is-my-json-valid": "^2",
+    "JSONPath": "^0",
+    "nyc": "^15.1.0",
+    "path": "^0",
+    "prettyjson": "^1",
+    "request": "^2",
+    "request-promise": "^4.2.6",
+    "swagger-tools": "^0",
+    "xmldom": "^0",
+    "xpath.js": "^1"
+  },
+  "devDependencies": {
+    "argv": "^0",
+    "chai": "^4.1.2",
+    "cucumber": "^5",
+    "cucumber-html-reporter": "^4",
+    "eslint": "^5",
+    "eslint-config-google": "^0",
+    "expect.js": "*",
+    "fs-extra": "^7",
+    "istanbul": "^0.4.5",
+    "mocha": "^8.2.1",
+    "mocha-xunit-reporter": "^1.1.0",
+    "nyc": "^14.1.1",
+    "rewire": "*",
+    "sinon": "*"
+  }
+}

@@ -92,7 +92,7 @@ pipeline {
                         contentType: 'APPLICATION_JSON',
                         httpMode: 'POST',
                         url: githubApiUrl,
-                        authentication: 'git-bootlabs',
+                        authentication: 'git(token)',
                         requestBody: pullRequestBody
                     )
                 }

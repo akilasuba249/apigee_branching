@@ -78,7 +78,7 @@ pipeline {
         stage('Create Pull Request') {
             steps {
                 script {
-                    def githubApiUrl = "https://api.github.com/repos/bootlabstech/apigee_branching/pulls"
+                    def githubApiUrl = "https://api.github.com/repos/akilasuba249/apigee_branching/pulls"
                     def pullRequestBody = """
                     {
                         "title": "UAT to Production PR",

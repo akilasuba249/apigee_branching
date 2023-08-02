@@ -92,7 +92,7 @@ pipeline {
                         contentType: 'APPLICATION_JSON',
                         httpMode: 'POST',
                         url: githubApiUrl,
-                        authentication: 'gitpostman',
+                        authentication: 'gitpost',
                         requestBody: pullRequestBody
                     )
                 }

@@ -14,7 +14,7 @@ stages {
         stage('Policy-Code Analysis') {
           when {
                 expression {
-                    return env.BRANCH_NAME == ‘main’
+                    return env.BRANCH_NAME == "main"
                 }
             }
             steps {
@@ -27,7 +27,7 @@ stages {
         stage('cobertura-coverage-test') {
            when {
                 expression {
-                    return env.BRANCH_NAME == ‘main’
+                    return env.BRANCH_NAME == "main"
                 }
             }
             steps {
@@ -49,7 +49,7 @@ stages {
         stage('SharedFlow deployment to UAT') {
             when {
                 expression {
-                    return env.BRANCH_NAME == ‘main’
+                    return env.BRANCH_NAME == "main"
                 }
             }
             steps {
@@ -63,7 +63,7 @@ stages {
         stage('Deploy to UAT') {
             when {
                 expression {
-                    return env.BRANCH_NAME == ‘main’
+                    return env.BRANCH_NAME == "main"
                 }
             }
             steps {
@@ -77,7 +77,7 @@ stages {
         stage('Create Pull Request') {
             when {
                 expression {
-                    return env.BRANCH_NAME == 'main'
+                    return env.BRANCH_NAME == "main"
                 }
             }
             steps {
@@ -106,7 +106,7 @@ stages {
         stage('SharedFlow deployment to PROD') {
             when {
                 expression {
-                    return env.BRANCH_NAME == 'prod'
+                    return env.BRANCH_NAME == "prod"
                 }
             }
             steps {
@@ -122,7 +122,7 @@ stages {
         stage('Deploy to PROD') {
             when {
                 expression {
-                    return env.BRANCH_NAME == 'prod'
+                    return env.BRANCH_NAME == "prod"
                 }
             }
              steps {

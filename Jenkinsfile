@@ -39,14 +39,14 @@ pipeline {
             }
         }
 
-        stage('Approval for UAT') {
-            steps {
-                script {
-                    def approval = input message: 'Approve to deploy in UAT', ok: 'Approve'
-                    echo "Approval: ${approval}"
-                }
-            }
-        }
+        // stage('Approval for UAT') {
+        //     steps {
+        //         script {
+        //             def approval = input message: 'Approve to deploy in UAT', ok: 'Approve'
+        //             echo "Approval: ${approval}"
+        //         }
+        //     }
+        // }
         stage('SharedFlow deployment to UAT') {
             steps {
                  // service account key from  credentials 
@@ -67,14 +67,14 @@ pipeline {
                 }
             }
         }
-        stage('Approval for production') {
-            steps {
-                script {
-                    def approval = input message: 'Approve to deploy in production', ok: 'Approve'
-                    echo "Approval: ${approval}"
-                }
-            }
-        }
+        // stage('Approval for production') {
+        //     steps {
+        //         script {
+        //             def approval = input message: 'Approve to deploy in production', ok: 'Approve'
+        //             echo "Approval: ${approval}"
+        //         }
+        //     }
+        // }
         stage('Create Pull Request') {
             steps {
                 script {

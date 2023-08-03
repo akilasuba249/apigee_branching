@@ -1,19 +1,22 @@
-#!groovy
-
 pipeline {
     agent any
     tools {
         maven 'Maven'
         nodejs 'Nodejs'
     }
-
-    stages {
+    
+stages {
         stage('Initial-Checks') {
             steps {
                 sh "npm -v"
                 sh "mvn -v"
         }}  
         stage('Policy-Code Analysis') {
+          when {
+                expression {
+                    return env.BRANCH_NAME == ‘main’
+                }
+            }
             steps {
                 sh "npm install -g apigeelint"
                 sh "apigeelint -s iciciproxy/apiproxy/ -f codeframe.js"
@@ -22,6 +25,11 @@ pipeline {
             }
         }
         stage('cobertura-coverage-test') {
+           when {
+                expression {
+                    return env.BRANCH_NAME == ‘main’
+                }
+            }
             steps {
                 script {
                     try {
@@ -38,44 +46,40 @@ pipeline {
                 }
             }
         }
-
-        // stage('Approval for UAT') {
-        //     steps {
-        //         script {
-        //             def approval = input message: 'Approve to deploy in UAT', ok: 'Approve'
-        //             echo "Approval: ${approval}"
-        //         }
-        //     }
-        // }
         stage('SharedFlow deployment to UAT') {
+            when {
+                expression {
+                    return env.BRANCH_NAME == ‘main’
+                }
+            }
             steps {
-                 // service account key from  credentials 
                 withCredentials([file(credentialsId: 'sailorgcp', variable: 'MY_FILE')]) {
                     echo 'My file path: $MY_FILE'
-                    //deploy using maven plugin and replace email and orgs value 
                     sh "mvn -f ./security/pom.xml install -Puat -Dorg=sailor-321711 -Dsafile=$MY_FILE -Demail=apigeetest@sailor-321711.iam.gserviceaccount.com"
                 }
             }
         }
+
         stage('Deploy to UAT') {
+            when {
+                expression {
+                    return env.BRANCH_NAME == ‘main’
+                }
+            }
             steps {
-                 // service account key from  credentials 
                 withCredentials([file(credentialsId: 'sailorgcp', variable: 'MY_FILE')]) {
                     echo 'My file path: $MY_FILE'
-                    //deploy using maven plugin and replace email and orgs value 
                     sh "mvn -f ./iciciproxy/pom.xml install -Puat -Dorg=sailor-321711 -Dsafile=$MY_FILE -Demail=apigeetest@sailor-321711.iam.gserviceaccount.com"
                 }
             }
         }
-        // stage('Approval for production') {
-        //     steps {
-        //         script {
-        //             def approval = input message: 'Approve to deploy in production', ok: 'Approve'
-        //             echo "Approval: ${approval}"
-        //         }
-        //     }
-        // }
+
         stage('Create Pull Request') {
+            when {
+                expression {
+                    return env.BRANCH_NAME == 'main'
+                }
+            }
             steps {
                 script {
                     def githubApiUrl = "https://api.github.com/repos/akilasuba249/apigee_branching/pulls"
@@ -99,5 +103,36 @@ pipeline {
             }
         }
 
+        stage('SharedFlow deployment to PROD') {
+            when {
+                expression {
+                    return env.BRANCH_NAME == 'prod'
+                }
+            }
+            steps {
+                 // service account key from  credentials 
+                withCredentials([file(credentialsId: 'sailorgcp', variable: 'MY_FILE')]) {
+                    echo 'My file path: $MY_FILE'
+                    //deploy using maven plugin and replace email and orgs value 
+                    sh "mvn -f ./security/pom.xml install -Puat -Dorg=sailor-321711 -Dsafile=$MY_FILE -Demail=apigeetest@sailor-321711.iam.gserviceaccount.com"
+                }
+            }
+        }
+
+        stage('Deploy to PROD') {
+            when {
+                expression {
+                    return env.BRANCH_NAME == 'prod'
+                }
+            }
+             steps {
+                 // service account key from  credentials 
+                withCredentials([file(credentialsId: 'sailorgcp', variable: 'MY_FILE')]) {
+                    echo 'My file path: $MY_FILE'
+                    //deploy using maven plugin and replace email and orgs value 
+                    sh "mvn -f ./iciciproxy/pom.xml install -Puat -Dorg=sailor-321711 -Dsafile=$MY_FILE -Demail=apigeetest@sailor-321711.iam.gserviceaccount.com"
+                }
+            }
+        }
     }
 }

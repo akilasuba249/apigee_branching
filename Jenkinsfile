@@ -13,31 +13,6 @@ pipeline {
                 sh "npm -v"
                 sh "mvn -v"
         }}  
-        // stage('Policy-Code Analysis') {
-        //     steps {
-        //         sh "npm install -g apigeelint"
-        //         sh "apigeelint -s iciciproxy/apiproxy/ -f codeframe.js"
-        //         sh "apigeelint -s security/sharedflowbundle/ -f codeframe.js"
-
-        //     }
-        // }
-        // stage('cobertura-coverage-test') {
-        //     steps {
-        //         script {
-        //             try {
-        //                sh "npm install request-promise"
-        //                 sh "npm install"
-        //                 sh "npm test test/unit/*.js"
-        //                 sh "npm run coverage"
-        //             } catch (e) {
-        //                 throw e
-        //             } finally {
-        //                 sh "cd coverage && cp cobertura-coverage.xml $WORKSPACE"
-        //                 step([$class: 'CoberturaPublisher', coberturaReportFile: 'cobertura-coverage.xml'])
-        //             }
-        //         }
-        //     }
-        // }
 
         stage('SharedFlow deployment to PROD') {
             steps {

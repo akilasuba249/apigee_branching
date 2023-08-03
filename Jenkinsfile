@@ -75,6 +75,29 @@ pipeline {
                 }
             }
         }
+        stage('Create Pull Request') {
+            steps {
+                script {
+                    def githubApiUrl = "https://api.github.com/repos/akilasuba249/apigee_branching/pulls"
+                    def pullRequestBody = """
+                    {
+                        "title": "UAT to Production PR",
+                        "head": "main",
+                        "base": "prod"
+                    }
+                    """
+
+                    httpRequest(
+                        acceptType: 'APPLICATION_JSON',
+                        contentType: 'APPLICATION_JSON',
+                        httpMode: 'POST',
+                        url: githubApiUrl,
+                        authentication: 'gitsecret',
+                        requestBody: pullRequestBody
+                    )
+                }
+            }
+        }
 
         stage('SharedFlow deployment to PROD') {
             steps {

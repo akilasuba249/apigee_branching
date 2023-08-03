@@ -6,6 +6,34 @@ pipeline {
     }
     
 stages {
+    stage('Create Pull Request to UAT') {
+            when {
+                expression {
+                    return env.BRANCH_NAME == "main"
+                }
+            }
+            steps {
+                script {
+                    def githubApiUrl = "https://api.github.com/repos/akilasuba249/apigee_branching/pulls"
+                    def pullRequestBody = """
+                    {
+                        "title": "UAT to Production PR",
+                        "head": "main",
+                        "base": "uat"
+                    }
+                    """
+
+                    httpRequest(
+                        acceptType: 'APPLICATION_JSON',
+                        contentType: 'APPLICATION_JSON',
+                        httpMode: 'POST',
+                        url: githubApiUrl,
+                        authentication: 'gitsecret',
+                        requestBody: pullRequestBody
+                    )
+                }
+            }
+        }
         stage('Initial-Checks') {
             steps {
                 sh "npm -v"
@@ -14,7 +42,7 @@ stages {
         stage('Policy-Code Analysis') {
           when {
                 expression {
-                    return env.BRANCH_NAME == "main"
+                    return env.BRANCH_NAME == "uat"
                 }
             }
             steps {
@@ -27,7 +55,7 @@ stages {
         stage('cobertura-coverage-test') {
            when {
                 expression {
-                    return env.BRANCH_NAME == "main"
+                    return env.BRANCH_NAME == "uat"
                 }
             }
             steps {
@@ -49,7 +77,7 @@ stages {
         stage('SharedFlow deployment to UAT') {
             when {
                 expression {
-                    return env.BRANCH_NAME == "main"
+                    return env.BRANCH_NAME == "uat"
                 }
             }
             steps {
@@ -63,7 +91,7 @@ stages {
         stage('Deploy to UAT') {
             when {
                 expression {
-                    return env.BRANCH_NAME == "main"
+                    return env.BRANCH_NAME == "uat"
                 }
             }
             steps {
@@ -74,10 +102,10 @@ stages {
             }
         }
 
-        stage('Create Pull Request') {
+        stage('Create Pull Request to PROD') {
             when {
                 expression {
-                    return env.BRANCH_NAME == "main"
+                    return env.BRANCH_NAME == "uat"
                 }
             }
             steps {
@@ -86,7 +114,7 @@ stages {
                     def pullRequestBody = """
                     {
                         "title": "UAT to Production PR",
-                        "head": "main",
+                        "head": "uat",
                         "base": "prod"
                     }
                     """
